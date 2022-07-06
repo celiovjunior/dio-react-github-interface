@@ -15,6 +15,7 @@ function GithubProvider ({ children }) {
   const [githubState, setGithubState] = useState({
     loading: false,
     user: {
+      avatar: undefined,
       login: undefined,
       name: undefined,
       html_url: undefined,
@@ -32,18 +33,20 @@ function GithubProvider ({ children }) {
 
   const getUser = (username) => {
     api.get(`/users/${username}`)
-    .then(({ data: {user}}) => {
+    .then(({ data }) => {
+      console.log(data);
       setGithubState(prevState =>({...prevState, user: {
-        login: user.login,
-        name: user.name,
-        html_url: user.html_url,
-        company: user.company,
-        location: user.location,
-        blog: user.blog,
-        followers: user.followers,
-        following: user.following,
-        public_gists: user.public_gists,
-        public_repos: user.public_repos
+        login: data.login,
+        avatar: data.avatar_url,
+        name: data.name,
+        html_url: data.html_url,
+        company: data.company,
+        location: data.location,
+        blog: data.blog,
+        followers: data.followers,
+        following: data.following,
+        public_gists: data.public_gists,
+        public_repos: data.public_repos
       }}))
     })
   }
