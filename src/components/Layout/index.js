@@ -3,6 +3,7 @@ import Header from "../Header";
 import * as S from "./styled";
 
 function Layout({ children }) {
+
   return(
     <S.WrapperLayout>
       <Header />

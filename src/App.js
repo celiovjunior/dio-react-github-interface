@@ -1,22 +1,24 @@
 import Layout from "./components/Layout";
-import GithubProvider from "./providers/GithubProvider";
 import Profile from "./components/Profile";
 import Repositories from "./components/Repositories";
-import { ResetCSS } from "./Global/resetCSS";
+import useGithub from "./hooks/gihubHooks";
 
 function App() {
+  const { githubState } = useGithub();
+
   return (
-    <main>
-      <GithubProvider>
+    <Layout>
+      { githubState.hasUser ? <>
+      {githubState.loading ? <p>Loading</p> : (
+        <>
+          <Profile />
+          <Repositories />
+        </>
+      )}
+      </> : <div>Search for a developer profile by their github's username</div>}
 
-        <ResetCSS />
-          <Layout>
-            <Profile />
-            <Repositories />
-          </Layout>
+    </Layout>
 
-      </GithubProvider>
-    </main>
   );
 }
 
