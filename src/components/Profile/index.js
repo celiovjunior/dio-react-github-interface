@@ -9,7 +9,7 @@ function Profile() {
                 <h1>Celio Jr</h1>
                 <S.WrapperUserName>
                   <h3>username</h3>
-                  <span>celiovjunior</span>
+                  <a href="https://github.com/celiovjunior" target="_blank" rel="noreferrer">celiovjunior</a>
                 </S.WrapperUserName>
               </div>
               <S.WrapperStatusCount>
@@ -18,7 +18,7 @@ function Profile() {
                 <span>15</span>
               </div>
               <div>
-                <h4>Starreds</h4>
+                <h4>Starred</h4>
                 <span>15</span>
               </div>
               <div>
@@ -27,7 +27,6 @@ function Profile() {
               </div>
               </S.WrapperStatusCount>
             </S.WrapperInfosUser>
-
   </S.Wrapper>
 };
 
