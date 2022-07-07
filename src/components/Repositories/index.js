@@ -1,31 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import useGithub from "../../hooks/gihubHooks";
 import RepositoryItem from "../RepositoryItem";
 import * as S from "./styled";
 
 function Repositories() {
-  return <S.WrapperTabs
+  const { githubState, getUserRepos } = useGithub();
+  const [hasUserForSearchRepos, setHasUserForSearchRepos] = useState(false);
+
+  useEffect(() => {
+    if(!!githubState.user.login) {
+      getUserRepos();
+    } 
+    setHasUserForSearchRepos(!!githubState.repositories)
+  }, [githubState.user]);
+
+  return(
+    <>
+
+      {hasUserForSearchRepos ? 
+    <S.WrapperTabs
     selectedTabClassName="is-selected"
     selectedTabPanelClassName="is-selected"
   >
-
     <S.WrapperTabList>
       <S.WrapperTab>Repositories</S.WrapperTab>
       <S.WrapperTab>Starred</S.WrapperTab>
     </S.WrapperTabList>
     <S.WrapperTabPanel>
+
+      {
+      githubState.repositories.map((item) =>(
       <RepositoryItem
-       name="repo 1"
-       linkToRepo="https://github.com/celiovjunior/js-calc" 
-       fullName="Js Calc" 
-      />
+      key={item.id}
+      name={item.name}
+      linkToRepo={item.html_url}
+      fullName={item.full_name} 
+      /> 
+      ))}
+
     </S.WrapperTabPanel>
     <S.WrapperTabPanel>
+      {
+      githubState.starred.map((item) =>(
       <RepositoryItem
-      name="repo 2"
-      linkToRepo="https://github.com/celiovjunior/js-crud" 
-      fullName="Js Crud"/>
-    </S.WrapperTabPanel>
-  </S.WrapperTabs>
+      key={item.id}
+      name={item.name}
+      linkToRepo={item.html_url} 
+      fullName={item.full_name}
+      /> 
+      ))}
+
+      </S.WrapperTabPanel>
+  </S.WrapperTabs> : <></>  
+    }      
+    </>
+  )
 };
 
 export default Repositories;
